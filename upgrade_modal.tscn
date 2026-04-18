@@ -1,0 +1,305 @@
+[gd_scene format=3 uid="uid://bmodal0001"]
+
+[ext_resource type="Script" path="res://upgrade_modal.gd" id="1_modal"]
+
+[sub_resource type="StyleBoxFlat" id="SBF_panel"]
+bg_color = Color(0.07, 0.08, 0.13, 1)
+border_color = Color(0.22, 0.22, 0.36, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="UpgradeModal" type="CanvasLayer"]
+layer = 10
+process_mode = 3
+script = ExtResource("1_modal")
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Overlay" type="ColorRect" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.72)
+
+[node name="Panel" type="PanelContainer" parent="Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -560.0
+offset_top = -240.0
+offset_right = 560.0
+offset_bottom = 240.0
+theme_override_styles/panel = SubResource("SBF_panel")
+
+[node name="Margin" type="MarginContainer" parent="Control/Panel"]
+theme_override_constants/margin_left = 28
+theme_override_constants/margin_right = 28
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_bottom = 22
+
+[node name="VBox" type="VBoxContainer" parent="Control/Panel/Margin"]
+theme_override_constants/separation = 16
+
+[node name="Header" type="VBoxContainer" parent="Control/Panel/Margin/VBox"]
+theme_override_constants/separation = 4
+
+[node name="LevelBadge" type="Label" parent="Control/Panel/Margin/VBox/Header"]
+text = "NÍVEL 2"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 28
+theme_override_colors/font_color = Color(1.0, 0.85, 0.2, 1)
+
+[node name="Subtitle" type="Label" parent="Control/Panel/Margin/VBox/Header"]
+text = "Escolha um bônus de upgrade"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.62, 0.62, 0.76, 1)
+
+[node name="Cards" type="HBoxContainer" parent="Control/Panel/Margin/VBox"]
+theme_override_constants/separation = 14
+size_flags_vertical = 3
+
+[node name="SpeedCard" type="PanelContainer" parent="Control/Panel/Margin/VBox/Cards"]
+size_flags_horizontal = 3
+
+[node name="VBox" type="VBoxContainer" parent="Control/Panel/Margin/VBox/Cards/SpeedCard"]
+theme_override_constants/separation = 8
+
+[node name="Icon" type="TextureRect" parent="Control/Panel/Margin/VBox/Cards/SpeedCard/VBox"]
+custom_minimum_size = Vector2(64, 64)
+size_flags_horizontal = 4
+stretch_mode = 5
+texture_filter = 1
+
+[node name="Name" type="Label" parent="Control/Panel/Margin/VBox/Cards/SpeedCard/VBox"]
+text = "Velocidade"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.85, 0.9, 1.0, 1)
+
+[node name="Bonus" type="Label" parent="Control/Panel/Margin/VBox/Cards/SpeedCard/VBox"]
+text = "+20 velocidade"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.45, 0.72, 1.0, 1)
+
+[node name="Desc" type="Label" parent="Control/Panel/Margin/VBox/Cards/SpeedCard/VBox"]
+text = "Movimente-se mais\nrápido pelo mapa"
+horizontal_alignment = 1
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.58, 0.62, 0.72, 1)
+
+[node name="Value" type="Label" parent="Control/Panel/Margin/VBox/Cards/SpeedCard/VBox"]
+text = "Atual: 200"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.42, 0.46, 0.58, 1)
+
+[node name="Spacer" type="Control" parent="Control/Panel/Margin/VBox/Cards/SpeedCard/VBox"]
+size_flags_vertical = 3
+
+[node name="Btn" type="Button" parent="Control/Panel/Margin/VBox/Cards/SpeedCard/VBox"]
+text = "ESCOLHER"
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 13
+
+[node name="ForceCard" type="PanelContainer" parent="Control/Panel/Margin/VBox/Cards"]
+size_flags_horizontal = 3
+
+[node name="VBox" type="VBoxContainer" parent="Control/Panel/Margin/VBox/Cards/ForceCard"]
+theme_override_constants/separation = 8
+
+[node name="Icon" type="TextureRect" parent="Control/Panel/Margin/VBox/Cards/ForceCard/VBox"]
+custom_minimum_size = Vector2(64, 64)
+size_flags_horizontal = 4
+stretch_mode = 5
+texture_filter = 1
+
+[node name="Name" type="Label" parent="Control/Panel/Margin/VBox/Cards/ForceCard/VBox"]
+text = "Força"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(1.0, 0.9, 0.75, 1)
+
+[node name="Bonus" type="Label" parent="Control/Panel/Margin/VBox/Cards/ForceCard/VBox"]
+text = "+1 dano por bala"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(1.0, 0.65, 0.25, 1)
+
+[node name="Desc" type="Label" parent="Control/Panel/Margin/VBox/Cards/ForceCard/VBox"]
+text = "Aumente o dano\ndas suas balas"
+horizontal_alignment = 1
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.65, 0.58, 0.50, 1)
+
+[node name="Value" type="Label" parent="Control/Panel/Margin/VBox/Cards/ForceCard/VBox"]
+text = "Atual: 1"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.55, 0.48, 0.40, 1)
+
+[node name="Spacer" type="Control" parent="Control/Panel/Margin/VBox/Cards/ForceCard/VBox"]
+size_flags_vertical = 3
+
+[node name="Btn" type="Button" parent="Control/Panel/Margin/VBox/Cards/ForceCard/VBox"]
+text = "ESCOLHER"
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 13
+
+[node name="ResCard" type="PanelContainer" parent="Control/Panel/Margin/VBox/Cards"]
+size_flags_horizontal = 3
+
+[node name="VBox" type="VBoxContainer" parent="Control/Panel/Margin/VBox/Cards/ResCard"]
+theme_override_constants/separation = 8
+
+[node name="Icon" type="TextureRect" parent="Control/Panel/Margin/VBox/Cards/ResCard/VBox"]
+custom_minimum_size = Vector2(64, 64)
+size_flags_horizontal = 4
+stretch_mode = 5
+texture_filter = 1
+
+[node name="Name" type="Label" parent="Control/Panel/Margin/VBox/Cards/ResCard/VBox"]
+text = "Resistência"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.78, 0.96, 0.82, 1)
+
+[node name="Bonus" type="Label" parent="Control/Panel/Margin/VBox/Cards/ResCard/VBox"]
+text = "-5 dano recebido"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.30, 0.90, 0.42, 1)
+
+[node name="Desc" type="Label" parent="Control/Panel/Margin/VBox/Cards/ResCard/VBox"]
+text = "Reduza o dano\nrecebido por toque"
+horizontal_alignment = 1
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.50, 0.65, 0.55, 1)
+
+[node name="Value" type="Label" parent="Control/Panel/Margin/VBox/Cards/ResCard/VBox"]
+text = "Atual: 0"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.40, 0.55, 0.44, 1)
+
+[node name="Spacer" type="Control" parent="Control/Panel/Margin/VBox/Cards/ResCard/VBox"]
+size_flags_vertical = 3
+
+[node name="Btn" type="Button" parent="Control/Panel/Margin/VBox/Cards/ResCard/VBox"]
+text = "ESCOLHER"
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 13
+
+[node name="FireCard" type="PanelContainer" parent="Control/Panel/Margin/VBox/Cards"]
+size_flags_horizontal = 3
+
+[node name="VBox" type="VBoxContainer" parent="Control/Panel/Margin/VBox/Cards/FireCard"]
+theme_override_constants/separation = 8
+
+[node name="Icon" type="TextureRect" parent="Control/Panel/Margin/VBox/Cards/FireCard/VBox"]
+custom_minimum_size = Vector2(64, 64)
+size_flags_horizontal = 4
+stretch_mode = 5
+texture_filter = 1
+
+[node name="Name" type="Label" parent="Control/Panel/Margin/VBox/Cards/FireCard/VBox"]
+text = "Rajada"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.95, 0.82, 1.0, 1)
+
+[node name="Bonus" type="Label" parent="Control/Panel/Margin/VBox/Cards/FireCard/VBox"]
+text = "-0.04s entre tiros"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.78, 0.45, 1.0, 1)
+
+[node name="Desc" type="Label" parent="Control/Panel/Margin/VBox/Cards/FireCard/VBox"]
+text = "Atire mais rápido\na cada upgrade"
+horizontal_alignment = 1
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.62, 0.52, 0.70, 1)
+
+[node name="Value" type="Label" parent="Control/Panel/Margin/VBox/Cards/FireCard/VBox"]
+text = "Atual: 0.25s"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.50, 0.42, 0.58, 1)
+
+[node name="Spacer" type="Control" parent="Control/Panel/Margin/VBox/Cards/FireCard/VBox"]
+size_flags_vertical = 3
+
+[node name="Btn" type="Button" parent="Control/Panel/Margin/VBox/Cards/FireCard/VBox"]
+text = "ESCOLHER"
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 13
+
+[node name="RegenCard" type="PanelContainer" parent="Control/Panel/Margin/VBox/Cards"]
+size_flags_horizontal = 3
+
+[node name="VBox" type="VBoxContainer" parent="Control/Panel/Margin/VBox/Cards/RegenCard"]
+theme_override_constants/separation = 8
+
+[node name="Icon" type="TextureRect" parent="Control/Panel/Margin/VBox/Cards/RegenCard/VBox"]
+custom_minimum_size = Vector2(64, 64)
+size_flags_horizontal = 4
+stretch_mode = 5
+texture_filter = 1
+
+[node name="Name" type="Label" parent="Control/Panel/Margin/VBox/Cards/RegenCard/VBox"]
+text = "Regeneração"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(0.6, 0.95, 0.85, 1)
+
+[node name="Bonus" type="Label" parent="Control/Panel/Margin/VBox/Cards/RegenCard/VBox"]
+text = "-1.5s por ciclo"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 13
+theme_override_colors/font_color = Color(0.25, 0.85, 0.70, 1)
+
+[node name="Desc" type="Label" parent="Control/Panel/Margin/VBox/Cards/RegenCard/VBox"]
+text = "Regenera HP a\ncada ciclo de tempo"
+horizontal_alignment = 1
+autowrap_mode = 3
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.50, 0.65, 0.62, 1)
+
+[node name="Value" type="Label" parent="Control/Panel/Margin/VBox/Cards/RegenCard/VBox"]
+text = "Atual: 8.0s"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.40, 0.55, 0.52, 1)
+
+[node name="Spacer" type="Control" parent="Control/Panel/Margin/VBox/Cards/RegenCard/VBox"]
+size_flags_vertical = 3
+
+[node name="Btn" type="Button" parent="Control/Panel/Margin/VBox/Cards/RegenCard/VBox"]
+text = "ESCOLHER"
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 13
+
+[node name="Hint" type="Label" parent="Control/Panel/Margin/VBox"]
+text = "Clique em uma carta para aplicar o bônus"
+horizontal_alignment = 1
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.38, 0.38, 0.52, 1)
+
+[connection signal="pressed" from="Control/Panel/Margin/VBox/Cards/SpeedCard/VBox/Btn" to="." method="_on_speed_pressed"]
+[connection signal="pressed" from="Control/Panel/Margin/VBox/Cards/ForceCard/VBox/Btn" to="." method="_on_force_pressed"]
+[connection signal="pressed" from="Control/Panel/Margin/VBox/Cards/ResCard/VBox/Btn" to="." method="_on_res_pressed"]
+[connection signal="pressed" from="Control/Panel/Margin/VBox/Cards/FireCard/VBox/Btn" to="." method="_on_fire_rate_pressed"]
+[connection signal="pressed" from="Control/Panel/Margin/VBox/Cards/RegenCard/VBox/Btn" to="." method="_on_regen_pressed"]

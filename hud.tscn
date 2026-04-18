@@ -1,0 +1,147 @@
+[gd_scene format=3 uid="uid://bhud000001"]
+
+[ext_resource type="Script" path="res://hud.gd" id="1_hud"]
+
+[node name="HUD" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_hud")
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="WaveLabel" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -218.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 36.0
+text = "Onda 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 16
+
+[node name="HPRow" type="HBoxContainer" parent="Control"]
+offset_left = 12.0
+offset_top = 10.0
+offset_right = 220.0
+offset_bottom = 36.0
+
+[node name="HPBarContainer" type="Control" parent="Control/HPRow"]
+custom_minimum_size = Vector2(190, 22)
+
+[node name="HPBar" type="ProgressBar" parent="Control/HPRow/HPBarContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+min_value = 0.0
+max_value = 100.0
+value = 100.0
+show_percentage = false
+
+[node name="HPValue" type="Label" parent="Control/HPRow/HPBarContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+horizontal_alignment = 1
+vertical_alignment = 1
+mouse_filter = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "100/100"
+
+[node name="XPRow" type="HBoxContainer" parent="Control"]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -220.0
+offset_top = 10.0
+offset_right = -12.0
+offset_bottom = 36.0
+theme_override_constants/separation = 6
+
+[node name="XPBarContainer" type="Control" parent="Control/XPRow"]
+custom_minimum_size = Vector2(190, 22)
+size_flags_horizontal = 3
+
+[node name="XPBar" type="ProgressBar" parent="Control/XPRow/XPBarContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+min_value = 0.0
+max_value = 100.0
+value = 0.0
+show_percentage = false
+
+[node name="XPValue" type="Label" parent="Control/XPRow/XPBarContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+horizontal_alignment = 1
+vertical_alignment = 1
+mouse_filter = 2
+theme_override_font_sizes/font_size = 12
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "0/100"
+
+[node name="NivelLabel" type="Label" parent="Control"]
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 218.0
+offset_bottom = 36.0
+text = "Nível 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="Toast" type="PanelContainer" parent="Control"]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_top = 0.25
+anchor_bottom = 0.25
+offset_left = -110.0
+offset_top = 0.0
+offset_right = 110.0
+offset_bottom = 48.0
+
+[node name="ToastLabel" type="Label" parent="Control/Toast"]
+text = "Nível 2!"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 26
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="GameOver" type="ColorRect" parent="Control"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.65)
+
+[node name="FimLabel" type="Label" parent="Control/GameOver"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -120.0
+offset_right = 200.0
+offset_bottom = 40.0
+text = "FIM"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_font_sizes/font_size = 120
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="RestartButton" type="Button" parent="Control/GameOver"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 60.0
+offset_right = 100.0
+offset_bottom = 100.0
+text = "Voltar ao Início"
+theme_override_font_sizes/font_size = 22
+
+[connection signal="pressed" from="Control/GameOver/RestartButton" to="." method="_on_restart_pressed"]

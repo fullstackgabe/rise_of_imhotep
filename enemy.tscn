@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://benemy0001"]
+
+[ext_resource type="Script" path="res://enemy.gd" id="1_enemy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(18, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_area"]
+size = Vector2(20, 20)
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 9
+z_index = 1
+script = ExtResource("1_enemy")
+
+[node name="Visual" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_body")
+
+[node name="HitArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="AreaShape" type="CollisionShape2D" parent="HitArea"]
+shape = SubResource("RectangleShape2D_area")
+
+[connection signal="body_entered" from="HitArea" to="." method="_on_hit_area_body_entered"]
