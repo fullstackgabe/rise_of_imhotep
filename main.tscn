@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://bhud000001" path="res://hud.tscn" id="0_hud"]
 [ext_resource type="PackedScene" uid="uid://bmap000001" path="res://map.tscn" id="1_map"]
 [ext_resource type="PackedScene" uid="uid://bplayer00001" path="res://player.tscn" id="2_player"]
-[ext_resource type="PackedScene" uid="uid://baim000001" path="res://aim.tscn" id="3_aim"]
 [ext_resource type="Script" path="res://wave_manager.gd" id="5_wm"]
 [ext_resource type="PackedScene" uid="uid://bmodal0001" path="res://upgrade_modal.tscn" id="6_modal"]
 
@@ -18,8 +17,6 @@ position = Vector2(640, 360)
 
 [node name="Player" parent="." instance=ExtResource("2_player")]
 position = Vector2(640, 360)
-
-[node name="Aim" parent="." instance=ExtResource("3_aim")]
 
 [node name="WaveManager" type="Node" parent="."]
 script = ExtResource("5_wm")
