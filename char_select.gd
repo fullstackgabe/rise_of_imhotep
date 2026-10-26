@@ -156,5 +156,6 @@ func _update_selection() -> void:
 			sty.border_width_right  = 3
 
 func _start_game() -> void:
+	PlayerStats.reset()
 	PlayerStats.selected_character = CHARS[_selected_index]["id"]
 	get_tree().change_scene_to_file("res://main.tscn")

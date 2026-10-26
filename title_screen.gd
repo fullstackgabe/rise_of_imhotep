@@ -2,6 +2,7 @@ extends Node2D
 
 const SCROLL_SPEED := 35.0
 const BG_SCALE     := 3.6  # 400x200px * 3.6 = 1440x720 — preenche a tela 1280x720 exata
+const BG_CROP_RIGHT := 4   # colunas defeituosas na borda direita de egypt_landscape.png
 
 var _bg1 : Sprite2D
 var _bg2 : Sprite2D
@@ -34,23 +35,28 @@ func _add_background() -> void:
 	if tex == null:
 		return
 
-	_bg_width = tex.get_width() * BG_SCALE
+	# A imagem não emenda consigo mesma (bordas diferentes e as 4 últimas
+	# colunas com cor errada): corta essas colunas e espelha a segunda cópia,
+	# assim cada emenda junta uma borda com ela mesma.
+	var region := Rect2(0, 0, tex.get_width() - BG_CROP_RIGHT, tex.get_height())
+	_bg_width = region.size.x * BG_SCALE
 
-	_bg1 = Sprite2D.new()
-	_bg1.texture        = tex
-	_bg1.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	_bg1.scale          = Vector2(BG_SCALE, BG_SCALE)
-	_bg1.centered       = false
-	_bg1.position       = Vector2(0, 0)
-	add_child(_bg1)
+	_bg1 = _make_bg_sprite(tex, region, false)
+	_bg1.position = Vector2(0, 0)
+	_bg2 = _make_bg_sprite(tex, region, true)
+	_bg2.position = Vector2(_bg_width, 0.0)
 
-	_bg2 = Sprite2D.new()
-	_bg2.texture        = tex
-	_bg2.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	_bg2.scale          = Vector2(BG_SCALE, BG_SCALE)
-	_bg2.centered       = false
-	_bg2.position       = Vector2(_bg_width, 0.0)
-	add_child(_bg2)
+func _make_bg_sprite(tex: Texture2D, region: Rect2, flipped: bool) -> Sprite2D:
+	var s := Sprite2D.new()
+	s.texture        = tex
+	s.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	s.scale          = Vector2(BG_SCALE, BG_SCALE)
+	s.centered       = false
+	s.region_enabled = true
+	s.region_rect    = region
+	s.flip_h         = flipped
+	add_child(s)
+	return s
 
 func _add_title() -> void:
 	var title := Label.new()
