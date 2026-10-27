@@ -8,6 +8,7 @@ size = Vector2(8, 8)
 [node name="Bullet" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 1
+z_index = 1
 script = ExtResource("1_bullet")
 
 [node name="Visual" type="Sprite2D" parent="."]

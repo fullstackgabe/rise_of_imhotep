@@ -221,7 +221,7 @@ theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(0.95, 0.82, 1.0, 1)
 
 [node name="Bonus" type="Label" parent="Control/Panel/Margin/VBox/Cards/FireCard/VBox"]
-text = "-0.04s entre tiros"
+text = "-15% tempo entre tiros"
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.78, 0.45, 1.0, 1)
@@ -266,7 +266,7 @@ theme_override_font_sizes/font_size = 16
 theme_override_colors/font_color = Color(0.6, 0.95, 0.85, 1)
 
 [node name="Bonus" type="Label" parent="Control/Panel/Margin/VBox/Cards/RegenCard/VBox"]
-text = "-1.5s por ciclo"
+text = "-15% tempo entre curas"
 horizontal_alignment = 1
 theme_override_font_sizes/font_size = 13
 theme_override_colors/font_color = Color(0.25, 0.85, 0.70, 1)

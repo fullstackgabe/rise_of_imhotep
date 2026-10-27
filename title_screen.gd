@@ -1,12 +1,15 @@
 extends Node2D
 
-const SCROLL_SPEED := 35.0
-const BG_SCALE     := 3.6  # 400x200px * 3.6 = 1440x720 — preenche a tela 1280x720 exata
-const BG_CROP_RIGHT := 4   # colunas defeituosas na borda direita de egypt_landscape.png
+const PAN_PERIOD   := 26.0   # segundos para ir e voltar (era 40)
+const BG_SCALE     := 3.6    # 400x200px * 3.6 = 1440x720 — cobre a altura exata de 1280x720
+const BG_CROP_RIGHT := 4     # colunas defeituosas na borda direita de egypt_landscape.png
 
-var _bg1 : Sprite2D
-var _bg2 : Sprite2D
-var _bg_width := 0.0
+## A paisagem tem os morros escuros nas duas bordas (moldura), então não emenda
+## consigo mesma: em vez de rolar em loop, uma cópia só passeia devagar de um
+## lado para o outro e volta (sem emenda, sem sol duplicado).
+var _bg : Sprite2D
+var _pan_range := 0.0
+var _t := 0.0
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -15,14 +18,10 @@ func _ready() -> void:
 	_add_start_button()
 
 func _process(delta: float) -> void:
-	if _bg_width == 0.0:
+	if _bg == null:
 		return
-	_bg1.position.x -= SCROLL_SPEED * delta
-	_bg2.position.x -= SCROLL_SPEED * delta
-	if _bg1.position.x + _bg_width < 0.0:
-		_bg1.position.x = _bg2.position.x + _bg_width
-	if _bg2.position.x + _bg_width < 0.0:
-		_bg2.position.x = _bg1.position.x + _bg_width
+	_t += delta
+	_bg.position.x = -_pan_range * (0.5 - 0.5 * cos(TAU * _t / PAN_PERIOD))
 
 func _add_background() -> void:
 	# Céu sólido por baixo (cor do pôr do sol egípcio)
@@ -35,28 +34,15 @@ func _add_background() -> void:
 	if tex == null:
 		return
 
-	# A imagem não emenda consigo mesma (bordas diferentes e as 4 últimas
-	# colunas com cor errada): corta essas colunas e espelha a segunda cópia,
-	# assim cada emenda junta uma borda com ela mesma.
-	var region := Rect2(0, 0, tex.get_width() - BG_CROP_RIGHT, tex.get_height())
-	_bg_width = region.size.x * BG_SCALE
-
-	_bg1 = _make_bg_sprite(tex, region, false)
-	_bg1.position = Vector2(0, 0)
-	_bg2 = _make_bg_sprite(tex, region, true)
-	_bg2.position = Vector2(_bg_width, 0.0)
-
-func _make_bg_sprite(tex: Texture2D, region: Rect2, flipped: bool) -> Sprite2D:
-	var s := Sprite2D.new()
-	s.texture        = tex
-	s.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	s.scale          = Vector2(BG_SCALE, BG_SCALE)
-	s.centered       = false
-	s.region_enabled = true
-	s.region_rect    = region
-	s.flip_h         = flipped
-	add_child(s)
-	return s
+	_bg = Sprite2D.new()
+	_bg.texture        = tex
+	_bg.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_bg.scale          = Vector2(BG_SCALE, BG_SCALE)
+	_bg.centered       = false
+	_bg.region_enabled = true
+	_bg.region_rect    = Rect2(0, 0, tex.get_width() - BG_CROP_RIGHT, tex.get_height())
+	add_child(_bg)
+	_pan_range = maxf(0.0, _bg.region_rect.size.x * BG_SCALE - 1280.0)
 
 func _add_title() -> void:
 	var title := Label.new()

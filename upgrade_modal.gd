@@ -93,28 +93,25 @@ func show_modal(level: int) -> void:
 
 func _on_speed_pressed() -> void:
 	PlayerStats.upgrade_speed()
-	_close("Velocidade +20")
+	_close()
 
 func _on_force_pressed() -> void:
 	PlayerStats.upgrade_force()
-	_close("Força +1 dano")
+	_close()
 
 func _on_res_pressed() -> void:
 	PlayerStats.upgrade_resistance()
-	_close("Resistência +5")
+	_close()
 
 func _on_fire_rate_pressed() -> void:
 	PlayerStats.upgrade_fire_rate()
-	_close("Rajada +velocidade")
+	_close()
 
 func _on_regen_pressed() -> void:
 	PlayerStats.upgrade_regen()
-	_close("Regeneração +veloz")
+	_close()
 
-func _close(attr: String) -> void:
+func _close() -> void:
 	visible = false
 	get_tree().paused = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
-	var hud = get_tree().get_first_node_in_group("hud")
-	if hud:
-		hud.show_toast(attr)

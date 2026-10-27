@@ -19,6 +19,11 @@ var _damage_cooldown  := 0.0
 var _player_in_area   := false
 
 const DAMAGE_INTERVAL := 1.0
+const DETOUR_TIME     := 0.6
+var _detour_dir := Vector2.ZERO
+var _detour_t   := 0.0
+## Mapa infinito: múmia que ficou muito para trás reaparece em volta do jogador.
+const RELOCATE_DIST := 1400.0
 
 func _ready() -> void:
 	add_to_group("enemy")
@@ -61,7 +66,7 @@ func _add_walk_anim(sf: SpriteFrames, dir: String) -> void:
 	if not loaded:
 		sf.add_frame("walk_" + dir, load("res://characters/mummy/%s.png" % src_dir))
 
-# --- Movimento com A* ---
+# --- Movimento (reto até o jogador; ver map.find_path) ---
 
 func _physics_process(delta: float) -> void:
 	if _dying:
@@ -87,6 +92,10 @@ func _refresh_path() -> void:
 	var map    = get_tree().get_first_node_in_group("map")
 	if player == null or map == null:
 		return
+	if global_position.distance_to(player.global_position) > RELOCATE_DIST:
+		var wm = get_tree().get_first_node_in_group("wave_manager")
+		if wm:
+			global_position = wm.spawn_point_near_player()
 	var new_path = map.find_path(global_position, player.global_position)
 	if not new_path.is_empty():
 		_path       = new_path
@@ -104,11 +113,36 @@ func _follow_path() -> void:
 	if to_next.length() < WAYPOINT_THRESHOLD:
 		_path_index += 1
 
-	var vel := to_next.normalized() * BASE_SPEED * speed_multiplier
+	var want := to_next.normalized()
+	if _detour_t > 0.0:
+		_detour_t -= get_physics_process_delta_time()
+		want = (want * 0.3 + _detour_dir).normalized()
+	var vel := want * BASE_SPEED * speed_multiplier
 	velocity = vel
 	move_and_slide()
+	_check_blocked(to_next.normalized())
 	_facing = CharacterAnim.update_anim($Visual, vel, _facing)
 	$Visual.flip_h = (_facing == "east")
+
+## Bateu num objeto do cenário (pirâmide, palmeira, oásis): contorna por um tempo,
+## andando de lado para o lado mais próximo da borda do obstáculo.
+func _check_blocked(goal_dir: Vector2) -> void:
+	if _detour_t > 0.0:
+		return
+	for i in get_slide_collision_count():
+		var col := get_slide_collision(i)
+		if not (col.get_collider() is StaticBody2D):
+			continue
+		var n := col.get_normal()
+		if n.dot(goal_dir) > -0.3:
+			continue   ## raspando de lado: o próprio slide já contorna
+		var side := n.orthogonal()
+		var to_obstacle: Vector2 = (col.get_collider() as Node2D).global_position - global_position
+		if side.dot(to_obstacle) > 0.0:
+			side = -side
+		_detour_dir = side
+		_detour_t   = DETOUR_TIME
+		return
 
 # --- Vida e dano ---
 

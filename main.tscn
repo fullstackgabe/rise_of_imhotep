@@ -4,14 +4,17 @@
 [ext_resource type="PackedScene" uid="uid://bmap000001" path="res://map.tscn" id="1_map"]
 [ext_resource type="PackedScene" uid="uid://bplayer00001" path="res://player.tscn" id="2_player"]
 [ext_resource type="Script" path="res://wave_manager.gd" id="5_wm"]
+[ext_resource type="Script" path="res://follow_camera.gd" id="7_cam"]
 [ext_resource type="PackedScene" uid="uid://bmodal0001" path="res://upgrade_modal.tscn" id="6_modal"]
 
 [node name="Main" type="Node2D"]
+y_sort_enabled = true
 
 [node name="HUD" parent="." instance=ExtResource("0_hud")]
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 360)
+script = ExtResource("7_cam")
 
 [node name="Map" parent="." instance=ExtResource("1_map")]
 

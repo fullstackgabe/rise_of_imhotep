@@ -29,8 +29,9 @@ func upgrade_force() -> void:
 func upgrade_resistance() -> void:
 	resistance += 5
 
+## Sem limite: cada upgrade corta 15% do intervalo (nunca chega a 0).
 func upgrade_fire_rate() -> void:
-	fire_rate = max(0.05, fire_rate - 0.04)
+	fire_rate *= 0.85
 
 func upgrade_regen() -> void:
-	regen_rate = max(2.0, regen_rate - 1.5)
+	regen_rate *= 0.85
